@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        #imgReaction {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+            display: none;
+            position: relative;
+        }
+    </style>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <p>Click on the Picture Below. <span id="timeReaction"></span> </p>
+
+    <div id="imgReaction"></div>
+
+    <script>
+        let clickedTime
+        let createdTime
+        let reactionTime
+
+        function getRandomColor() {
+            let letters = "0 1 2 3 4 5 6 7 8 9 A B C D E F".split(" ")
+            let color = "#"
+
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.round(Math.random() * 16)]
+            }
+
+            return color
+        }
+
+        function makeBox() {
+            let time = Math.random()
+            time = time * 3000
+
+            setTimeout(function() {
+                if (Math.random() > 5.0) {
+                    document.getElementById("imgReaction").style.borderRadius = "100px"
+
+                } else {
+                    document.getElementById("imgReaction").style.borderRadius = "0"
+                }
+
+                let top = Math.random()
+                top = top * 300
+
+                let left = Math.random()
+                left = left * 500
+
+                document.getElementById("imgReaction").style.top = `${top}px`
+                document.getElementById("imgReaction").style.left = `${left}px`
+                document.getElementById("imgReaction").style.backgroundColor = getRandomColor()
+                document.getElementById("imgReaction").style.display = "block"
+
+                createdTime = Date.now()
+
+            }, time)
+        }
+
+        document.getElementById("imgReaction").onclick = function() {
+            clickedTime = Date.now()
+
+            reactionTime = (clickedTime - createdTime) / 1000
+
+            document.getElementById("timeReaction").innerHTML = `Time is: ${reactionTime} seconds`
+            this.style.display = "none"
+
+            makeBox()
+        }
+
+        makeBox()
+    </script>
+</body>
+
+</html>
